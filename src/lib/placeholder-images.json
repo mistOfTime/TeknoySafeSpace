@@ -1,0 +1,34 @@
+{
+  "placeholderImages": [
+    {
+      "id": "meditation",
+      "description": "Guided Mindful Meditation Visual",
+      "imageUrl": "https://i.pinimg.com/736x/89/ae/97/89ae979a489f1c942473ff157a3da692.jpg",
+      "imageHint": "meditation relax"
+    },
+    {
+      "id": "counseling",
+      "description": "Counseling session representation",
+      "imageUrl": "https://picsum.photos/seed/counsel/600/400",
+      "imageHint": "counseling therapy"
+    },
+    {
+      "id": "time-management",
+      "description": "Time Management for Students Visual",
+      "imageUrl": "https://i.pinimg.com/736x/d0/be/d0/d0bed09e52671e782c094c976e8c343a.jpg",
+      "imageHint": "planning productivity"
+    },
+    {
+      "id": "manga",
+      "description": "Reading Manga for relaxation",
+      "imageUrl": "https://www.kenmei.co/assets/asura_scans_logo-CbbbyQea.jpg",
+      "imageHint": "manga library"
+    },
+    {
+      "id": "music",
+      "description": "Music for relaxation and focus",
+      "imageUrl": "https://sm.mashable.com/t/mashable_me/article/s/spotify-st/spotify-starts-hiding-song-lyrics-behind-paywall_sqqy.2496.jpg",
+      "imageHint": "listening music"
+    }
+  ]
+}

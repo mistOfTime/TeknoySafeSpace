@@ -1,0 +1,86 @@
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // --- Core Authorization Helpers ---
+    
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    // Comprehensive Admin check
+    // Checks both for the existence of the document AND the content of the 'Role' or 'role' field
+    function isAdmin() {
+      return isSignedIn() && (
+        exists(/databases/$(database)/documents/roles_admin/$(request.auth.uid)) && (
+          get(/databases/$(database)/documents/roles_admin/$(request.auth.uid)).data.Role in ["Admin", "admin", "ADMIN"] ||
+          get(/databases/$(database)/documents/roles_admin/$(request.auth.uid)).data.role in ["Admin", "admin", "ADMIN"]
+        )
+      );
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    // --- Admin Access Control ---
+    
+    match /roles_admin/{adminUid} {
+      allow get: if isSignedIn() && request.auth.uid == adminUid;
+      allow list: if isAdmin();
+      allow create, update, delete: if false;
+    }
+
+    // --- Moderation Flags ---
+    
+    match /flags/{flagId} {
+      // Explicitly allow both single document reads and full collection listing for verified admins
+      allow read, get, list: if isAdmin();
+      // Any signed-in student can report content
+      allow create: if isSignedIn();
+      // Only admins can resolve or dismiss
+      allow update, delete: if isAdmin();
+    }
+
+    // --- Student Profiles ---
+    
+    match /studentProfiles/{studentId} {
+      allow get: if isSignedIn();
+      allow list: if isAdmin(); 
+      allow create, update: if isOwner(studentId);
+      allow delete: if isAdmin();
+
+      match /stressAssessments/{assessmentId} {
+        allow read, write: if isOwner(studentId);
+        allow list: if isAdmin();
+      }
+    }
+
+    // --- Community Feed ---
+    
+    match /posts/{postId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn();
+      allow update, delete: if isAdmin() || (isSignedIn() && resource.data.authorId == request.auth.uid);
+
+      match /reactions/{reactionId} {
+        allow read: if isSignedIn();
+        allow write: if isSignedIn();
+      }
+    }
+
+    // --- School Suggestions ---
+    
+    match /suggestions/{suggestionId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn();
+      allow update: if isSignedIn();
+      allow delete: if isAdmin();
+
+      match /votes/{userId} {
+        allow read, write: if isOwner(userId);
+      }
+    }
+  }
+}
