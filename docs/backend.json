@@ -1,0 +1,184 @@
+{
+  "entities": {
+    "StudentProfile": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "StudentProfile",
+      "type": "object",
+      "description": "Represents an authenticated student user within the CIT-U SafeSpace application.",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "studentIdNumber": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string",
+          "format": "email"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "photoUrl": {
+          "type": "string"
+        },
+        "dateCreated": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "studentIdNumber",
+        "email",
+        "firstName",
+        "lastName",
+        "dateCreated"
+      ]
+    },
+    "Post": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Post",
+      "type": "object",
+      "description": "Represents an anonymous text post submitted by a student to the community feed.",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "authorId": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "status": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "authorId",
+        "content",
+        "createdAt",
+        "status"
+      ]
+    },
+    "SchoolSuggestion": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "SchoolSuggestion",
+      "type": "object",
+      "description": "Represents an improvement suggestion for the school submitted by a student.",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "authorId": {
+          "type": "string"
+        },
+        "authorName": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string",
+          "enum": [
+            "Facilities",
+            "Academic",
+            "Campus Life",
+            "Technology",
+            "Other"
+          ]
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "upvotes": {
+          "type": "number"
+        },
+        "downvotes": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "id",
+        "authorId",
+        "title",
+        "content",
+        "category",
+        "createdAt"
+      ]
+    }
+  },
+  "auth": {
+    "providers": [
+      "password",
+      "anonymous"
+    ]
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/studentProfiles/{studentId}",
+        "definition": {
+          "entityName": "StudentProfile",
+          "schema": {
+            "$ref": "#/backend/entities/StudentProfile"
+          },
+          "description": "Stores individual student profiles."
+        }
+      },
+      {
+        "path": "/posts/{postId}",
+        "definition": {
+          "entityName": "Post",
+          "schema": {
+            "$ref": "#/backend/entities/Post"
+          },
+          "description": "Stores community feed posts."
+        }
+      },
+      {
+        "path": "/suggestions/{suggestionId}",
+        "definition": {
+          "entityName": "SchoolSuggestion",
+          "schema": {
+            "$ref": "#/backend/entities/SchoolSuggestion"
+          },
+          "description": "Stores school improvement suggestions."
+        }
+      },
+      {
+        "path": "/suggestions/{suggestionId}/votes/{userId}",
+        "definition": {
+          "entityName": "Vote",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "up",
+                  "down"
+                ]
+              }
+            }
+          },
+          "description": "Stores individual user votes on suggestions."
+        }
+      }
+    ]
+  }
+}
