@@ -45,8 +45,9 @@ export default function AdminModeration() {
   const { data: adminRole, isLoading: isAdminRoleLoading } = useDoc(adminRef)
 
   const isVerifiedAdmin = React.useMemo(() => {
-    if (isAdminRoleLoading || !adminRole) return false
-    const roleValue = (adminRole.Role || adminRole.role || "").toString().toLowerCase()
+    if (isAdminRoleLoading) return false
+    if (!adminRole) return false
+    const roleValue = (adminRole.Role || adminRole.role || adminRole.ROLE || "").toString().toLowerCase().trim()
     return roleValue === "admin"
   }, [adminRole, isAdminRoleLoading])
 
