@@ -24,13 +24,13 @@ Ensure these variables are set in **Vercel -> Settings -> Environment Variables*
 
 | Variable Name | Value |
 | :--- | :--- |
-| `NEXT_PUBLIC_FIREBASE_API_KEY` | `AIzaSyCYMpYiPICXnn9hAu1wBDIJxzYZiENRqv0` |
-| `NEXT_PUBLIC_FIREBASE_PROJECT_ID` | `cit-u-safespace` |
-| `NEXT_PUBLIC_FIREBASE_APP_ID` | `1:162835588679:web:5bc320469cf7650352f362` |
-| `NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID` | `162835588679` |
-| `NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN` | `cit-u-safespace.firebaseapp.com` |
-| `NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET` | `cit-u-safespace.firebasestorage.app` |
-| `GEMINI_API_KEY` | `AIzaSyCYMpYiPICXnn9hAu1wBDIJxzYZiENRqv0` |
+| `NEXT_PUBLIC_FIREBASE_API_KEY` | `` |
+| `NEXT_PUBLIC_FIREBASE_PROJECT_ID` | `` |
+| `NEXT_PUBLIC_FIREBASE_APP_ID` | `` |
+| `NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID` | `` |
+| `NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN` | `` |
+| `NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET` | `` |
+| `GEMINI_API_KEY` | `` |
 
 ### 4. Add Authorized Domains
 1. Go to your **[Firebase Console Authentication Settings](https://console.firebase.google.com/project/cit-u-safespace/authentication/settings)**.
